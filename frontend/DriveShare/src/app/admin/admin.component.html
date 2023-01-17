@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<div class="row" style="padding: 50px">
+  <div class="col-md-8">
+    <div class="card" style="height: 44vh; overflow: scroll">
+      <div class="card-body">
+        <table class="table align-middle mb-0 bg-white">
+          <thead class="bg-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Organization</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                <div class="d-flex align-items-center">
+                  <p class="fw-bold mb-1">{{ user["name"] }}</p>
+                </div>
+              </td>
+              <td>
+                {{ user["email"] }}
+              </td>
+              <td>{{ user["organization"] }}</td>
+              <td>
+                <div>
+                  <select
+                    #selection1
+                    class="form-select-sm"
+                    aria-label=".form-select example"
+                    name="share"
+                    id="share"
+                    ngModel
+                    required
+                    (change)="setRole(selection1.value, user['email'])"
+                    [ngModel]="user['role'][0]['roleName']"
+                  >
+                    <option
+                      *ngFor="let role of roles"
+                      [value]="role['roleName']"
+                    >
+                      {{ role["roleName"] }}
+                    </option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Roles Usage</h5>
+        <h6 class="card-title">New</h6>
+        <p>This user has just registered.</p>
+        <h6 class="card-title">User</h6>
+        <p>This user can use the website with non admin access.</p>
+        <h6 class="card-title">Admin</h6>
+        <p>This user has admin access to the website.</p>
+        <h6 class="card-title">Blocked</h6>
+        <p>This user has been blocked.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="padding-left: 50px; padding-right: 50px">
+  <div class="card">
+    <h5 class="card-header">Update User Guidelines</h5>
+    <div class="card-body">
+      <mdb-form-control>
+        <textarea
+          mdbInput
+          [(ngModel)]="guidelines"
+          class="form-control"
+          id="textAreaExample"
+          rows="4"
+        ></textarea>
+        <label mdbLabel class="form-label" for="textAreaExample"></label>
+      </mdb-form-control>
+      <br />
+      <a (click)="setGuidelines()" class="btn btn-primary">Save</a>
+    </div>
+  </div>
+</div>

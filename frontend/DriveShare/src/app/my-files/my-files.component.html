@@ -1,0 +1,104 @@
+<app-navbar></app-navbar>
+<div *ngIf="isDataPresent !== true; else allData">
+  <div
+    class="d-flex align-items-center justify-content-center"
+    style="height: 350px"
+  >
+    <h1>No Files Uploaded</h1>
+  </div>
+</div>
+<ng-template #allData></ng-template>
+<div class="col-md-10" style="width: 98vw">
+  <div class="row" *ngFor="let folder of folders">
+    <div
+      *ngIf="isFolderNotEmpty(folder['name'])"
+      class="card text-center"
+      style="width: 90vw; height: 50vh; overflow: scroll; margin: 50px"
+    >
+      <div class="card-header">Folder: {{ folder["name"] }}</div>
+      <div class="card-body">
+        <div *ngIf="isDataPresent; else showData">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">File Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Download</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let dat of files; let i = index">
+                <tr *ngIf="dat['location'] === folder['name']">
+                  <td>{{ dat["fileName"] }}</td>
+                  <td>{{ dat["description"] }}</td>
+                  <td>
+                    <div *ngIf="dat['share'] === 'yes'; else sensitive">
+                      <select
+                        #selection1
+                        class="form-select-sm"
+                        aria-label=".form-select example"
+                        name="share"
+                        id="share"
+                        ngModel
+                        required
+                        (change)="
+                          changeShare(selection1.value, dat['fileID'], i)
+                        "
+                        [ngModel]="dat['share']"
+                      >
+                        <option value="yes">Share with others</option>
+                        <option value="no">Sensitive File</option>
+                      </select>
+                    </div>
+                    <ng-template #sensitive>
+                      <select
+                        #selection2
+                        class="form-select-sm"
+                        aria-label=".form-select example"
+                        name="share"
+                        id="share"
+                        ngModel
+                        (change)="
+                          changeShare(selection2.value, dat['fileID'], i)
+                        "
+                        required
+                        [ngModel]="dat['share']"
+                      >
+                        <option value="yes">Share with others</option>
+                        <option value="no">Sensitive File</option>
+                      </select>
+                    </ng-template>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-info btn-floating"
+                      (click)="downloadFile(dat['fileID'], dat['fileName'])"
+                    >
+                      <i class="fas fa-download"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-floating"
+                      (click)="deleteFile(dat['fileID'])"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <ng-template #showData>
+          <h3>No Files Shared</h3>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

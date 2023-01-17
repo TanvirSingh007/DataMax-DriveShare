@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="row" style="padding: 50px">
+  <div class="col-6 col-md-3">
+    <div class="card text-center" style="padding-top: 25px">
+      <div class="bg-image hover-overlay" mdbRipple rippleColor="light">
+        <i class="fas fa-upload fa-10x"></i>
+        <a [routerLink]="'/upload'">
+          <div
+            class="mask"
+            style="background-color: rgba(251, 251, 251, 0.15)"
+          ></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Upload File</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center" style="padding-top: 25px">
+      <div class="bg-image hover-overlay" mdbRipple rippleColor="light">
+        <i class="fa-regular fa-folder-open fa-10x"></i>
+        <a [routerLink]="'/myFiles'">
+          <div
+            class="mask"
+            style="background-color: rgba(251, 251, 251, 0.15)"
+          ></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">My Files</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center" style="padding-top: 25px">
+      <div class="bg-image hover-overlay" mdbRipple rippleColor="light">
+        <i class="fa-solid fa-users fa-10x"></i>
+        <a [routerLink]="'/sharedFiles'">
+          <div
+            class="mask"
+            style="background-color: rgba(251, 251, 251, 0.15)"
+          ></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Shared Files</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center" style="padding-top: 25px">
+      <div class="bg-image hover-overlay" mdbRipple rippleColor="light">
+        <i class="fa-solid fa-address-book fa-10x"></i>
+        <a [routerLink]="'/requestFiles'">
+          <div
+            class="mask"
+            style="background-color: rgba(251, 251, 251, 0.15)"
+          ></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Request Files</h5>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<app-navbar></app-navbar>
+<div class="col-md-6 offset-md-3 mt-5">
+  <h1>Request a File</h1>
+  <br />
+  <select
+    #selection
+    class="form-select form-select"
+    aria-label=".form-select-lg example"
+    name="location"
+    id="location"
+    (change)="getUserFiles(selection.value)"
+    required
+    ngModel
+  >
+    <option value="" disabled selected>Select user</option>
+    <option *ngFor="let user of users" [value]="user['email']">
+      {{ user["name"] }}
+    </option>
+  </select>
+  <br />
+</div>
+<div class="d-flex justify-content-center">
+  <div
+    class="card text-center"
+    style="width: 90vw; height: 60vh; overflow: scroll"
+  >
+    <div class="card-body">
+      <div *ngIf="isDataPresent; else showData">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">File Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Request</th>
+              <th scope="col" *ngIf="isAdmin">Status</th>
+              <th scope="col" *ngIf="isAdmin">Download</th>
+              <th scope="col" *ngIf="isAdmin">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let dat of files; let i = index">
+              <tr>
+                <td>{{ dat["fileName"] }}</td>
+                <td>{{ dat["description"] }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="
+                      sendFileRequest(
+                        dat['fileID'],
+                        dat['userName'],
+                        dat['fileName']
+                      )
+                    "
+                  >
+                    Request
+                  </button>
+                </td>
+                <td *ngIf="isAdmin">
+                  <div *ngIf="dat['share'] === 'yes'; else sensitive">
+                    <select
+                      #selection1
+                      class="form-select-sm"
+                      aria-label=".form-select example"
+                      name="share"
+                      id="share"
+                      ngModel
+                      required
+                      (change)="changeShare(selection1.value, dat['fileID'], i)"
+                      [ngModel]="dat['share']"
+                    >
+                      <option value="yes">Share with others</option>
+                      <option value="no">Sensitive File</option>
+                    </select>
+                  </div>
+                  <ng-template #sensitive>
+                    <select
+                      #selection2
+                      class="form-select-sm"
+                      aria-label=".form-select example"
+                      name="share"
+                      id="share"
+                      ngModel
+                      (change)="changeShare(selection2.value, dat['fileID'], i)"
+                      required
+                      [ngModel]="dat['share']"
+                    >
+                      <option value="yes">Share with others</option>
+                      <option value="no">Sensitive File</option>
+                    </select>
+                  </ng-template>
+                </td>
+                <td *ngIf="isAdmin">
+                  <button
+                    type="button"
+                    class="btn btn-info btn-floating"
+                    (click)="downloadFile(dat['fileID'], dat['fileName'])"
+                  >
+                    <i class="fas fa-download"></i>
+                  </button>
+                </td>
+                <td *ngIf="isAdmin">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-floating"
+                    (click)="deleteFile(dat['fileID'])"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #showData>
+        <h3>No Files Available</h3>
+      </ng-template>
+    </div>
+  </div>
+</div>

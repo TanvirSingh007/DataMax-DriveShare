@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+<div
+  class="d-flex align-items-center justify-content-center"
+  style="height: 91vh"
+>
+  <div class="card text-center" style="width: 90vw; height: 80vh">
+    <div class="card-header"><h5>Logs</h5></div>
+    <div class="card-body" style="overflow: scroll">
+      <div *ngIf="isDataPresent; else showData">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Action</th>
+              <th scope="col">File Name</th>
+              <th scope="col">Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let dat of data">
+              <tr>
+                <td>{{ dat["userName"] }}</td>
+                <td>{{ dat["action"] }}</td>
+                <td>{{ dat["fileID"] }}</td>
+                <td>{{ dat["time"] }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #showData>
+        <h3>No Logs</h3>
+      </ng-template>
+    </div>
+  </div>
+</div>
